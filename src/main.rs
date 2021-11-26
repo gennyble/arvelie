@@ -1,7 +1,5 @@
-use arvelie;
-
+use arvelie::Arvelie;
 use time::Date;
-use time::OffsetDateTime;
 
 fn main() {
 	let args: Vec<String> = std::env::args().skip(1).collect();
@@ -10,19 +8,18 @@ fn main() {
 		1 => {
 			println!(
 				"{}",
-				arvelie::to_arvelie_string(
-					Date::try_from_yo(args[0].parse::<i32>().unwrap(), 1).unwrap(),
-					OffsetDateTime::now_utc().date()
-				)
+				Arvelie::from_utc(Date::try_from_yo(args[0].parse::<i32>().unwrap(), 1).unwrap())
+					.as_string()
 			);
 		}
 		2 => {
 			println!(
 				"{}",
-				arvelie::to_arvelie_string(
+				Arvelie::from_date(
 					Date::try_from_yo(args[0].parse::<i32>().unwrap(), 1).unwrap(),
 					Date::parse(&args[1], "%F").unwrap()
 				)
+				.as_string()
 			);
 		}
 		_ => {
